@@ -1,20 +1,16 @@
 {
   "name": "music-exchange",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "cookie-parser": "^1.4.7",
-    "express": "^5.1.0"
+    "express": "^4.18.2",
+    "cookie-parser": "^1.4.6"
   },
-  "description": ""
-}
-"dependencies": {
-  "express": "^4.18.2",
-  "cookie-parser": "^1.4.6"
+  "engines": {
+    "node": ">=18.x"
+  }
 }
