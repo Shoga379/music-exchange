@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Музыкальный обмен</title>
+  <style>
+    body { font-family: Arial; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+    .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+    input { width: 100%; padding: 0.8rem; margin: 1rem 0; border: 2px solid #ddd; border-radius: 5px; }
+    button { background: #007bff; color: white; border: none; padding: 1rem 2rem; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .status { margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 5px; }
+    .error { color: #dc3545; margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎶 Ебаште хорягу</h1>
+    
+    <form action="/submit" method="POST">
+      <input 
+        type="text" 
+        name="song" 
+        placeholder="Введите название песни"
+        required
+      >
+      <button type="submit">Участвовать</button>
+    </form>
+
+    <div class="status" id="status">Загрузка статуса...</div>
+    <div id="error"></div>
+  </div>
+
+  <script>
+    // Обновление статуса
+    function updateStatus() {
+      fetch('/status')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('status').innerHTML = `
+            Участников: ${data.count}/10
+            ${data.ready ? '<p>🎉 Распределение завершено! <a href="/result">Проверить результат</a></p>' : ''}
+          `;
+        });
+    }
+
+    // Обработка ошибок
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    if (error) {
+      document.getElementById('error').innerHTML = `
+        <div class="error">⚠️ ${error}</div>
+      `;
+    }
+
+    // Автообновление
+    setInterval(updateStatus, 3000);
+    updateStatus();
+  </script>
+</body>
+</html>
